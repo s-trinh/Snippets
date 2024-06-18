@@ -1,5 +1,5 @@
-<library path="moveit_ompl_planner_plugin">
-  <class name="ompl_interface/OMPLPlanner" type="ompl_interface::OMPLPlannerManager" base_class_type="planning_interface::PlannerManager">
+<library path="custom_ompl_planner_plugin">
+  <class name="custom_ompl_interface/OMPLPlanner" type="custom_ompl_interface::OMPLPlannerManager" base_class_type="planning_interface::PlannerManager">
     <description>
     </description>
   </class>
