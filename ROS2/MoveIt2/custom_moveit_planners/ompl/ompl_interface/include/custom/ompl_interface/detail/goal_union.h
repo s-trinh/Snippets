@@ -36,7 +36,7 @@
 
 #include <ompl/base/goals/GoalSampleableRegion.h>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 /** @class GoalSampleableRegionMux*/
 class GoalSampleableRegionMux : public ompl::base::GoalSampleableRegion
@@ -81,4 +81,4 @@ protected:
   std::vector<ompl::base::GoalPtr> goals_;
   mutable unsigned int gindex_;
 };
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

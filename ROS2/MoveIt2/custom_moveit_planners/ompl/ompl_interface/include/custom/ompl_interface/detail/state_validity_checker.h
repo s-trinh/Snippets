@@ -47,11 +47,11 @@
 
 #pragma once
 
-#include <moveit/ompl_interface/detail/threadsafe_state_storage.h>
+#include <custom/ompl_interface/detail/threadsafe_state_storage.h>
 #include <moveit/collision_detection/collision_common.h>
 #include <ompl/base/StateValidityChecker.h>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 class ModelBasedPlanningContext;
 
@@ -132,14 +132,14 @@ public:
    *
    * This state type is special in that it "wraps" around a normal state,
    * which can be accessed by the getState() method. In this class we assume that this state,
-   * is of type `ompl_interface::ConstrainedPlanningStateSpace`, which inherits from
-   * `ompl_interface::ModelBasedStateSpace`.
+   * is of type `custom_ompl_interface::ConstrainedPlanningStateSpace`, which inherits from
+   * `custom_ompl_interface::ModelBasedStateSpace`.
    *
    * (For the actual implementation of this, look at the ompl::base::WrapperStateSpace.)
    *
    * Code sample that can be used to check all the assumptions:
    *
-   *    #include <moveit/ompl_interface/parameterization/joint_space/constrained_planning_state_space.h>
+   *    #include <custom/ompl_interface/parameterization/joint_space/constrained_planning_state_space.h>
    *    #include <ompl/base/ConstrainedSpaceInformation.h>
    *
    *    // the code below should be pasted at the top of the isValid method
@@ -154,4 +154,4 @@ public:
   bool isValid(const ompl::base::State* wrapped_state, bool verbose) const override;
   bool isValid(const ompl::base::State* wrapped_state, double& dist, bool verbose) const override;
 };
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

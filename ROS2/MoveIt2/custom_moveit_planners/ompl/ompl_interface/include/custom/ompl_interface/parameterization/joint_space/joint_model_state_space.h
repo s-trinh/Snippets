@@ -36,9 +36,9 @@
 
 #pragma once
 
-#include <moveit/ompl_interface/parameterization/model_based_state_space.h>
+#include <custom/ompl_interface/parameterization/model_based_state_space.h>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 class JointModelStateSpace : public ModelBasedStateSpace
 {
@@ -52,4 +52,4 @@ public:
     return PARAMETERIZATION_TYPE;
   }
 };
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

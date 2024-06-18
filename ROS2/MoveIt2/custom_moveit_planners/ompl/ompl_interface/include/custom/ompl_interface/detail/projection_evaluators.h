@@ -38,7 +38,7 @@
 
 #include <ompl/config.h>
 #include <ompl/base/ProjectionEvaluator.h>
-#include <moveit/ompl_interface/detail/threadsafe_state_storage.h>
+#include <custom/ompl_interface/detail/threadsafe_state_storage.h>
 
 // TODO: remove when ROS Lunar and older are no longer supported
 #if OMPL_VERSION_VALUE >= 1004000  // Version greater than 1.4.0
@@ -47,7 +47,7 @@ typedef Eigen::Ref<Eigen::VectorXd> OMPLProjection;
 typedef ompl::base::EuclideanProjection& OMPLProjection;
 #endif
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 class ModelBasedPlanningContext;
 
@@ -82,4 +82,4 @@ public:
 private:
   std::vector<unsigned int> variables_;
 };
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

@@ -37,13 +37,13 @@
 #include <algorithm>
 #include <iterator>
 
-#include <moveit/ompl_interface/detail/ompl_constraints.h>
+#include <custom/ompl_interface/detail/ompl_constraints.h>
 
 #include <tf2_eigen/tf2_eigen.hpp>
 
-static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit_planners_ompl.ompl_constraints");
+static const rclcpp::Logger LOGGER = rclcpp::get_logger("custom_moveit_planners_ompl.ompl_constraints");
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 Bounds::Bounds() : size_(0)
 {
@@ -107,7 +107,7 @@ std::size_t Bounds::size() const
   return size_;
 }
 
-std::ostream& operator<<(std::ostream& os, const ompl_interface::Bounds& bounds)
+std::ostream& operator<<(std::ostream& os, const custom_ompl_interface::Bounds& bounds)
 {
   os << "Bounds:\n";
   for (std::size_t i{ 0 }; i < bounds.size(); ++i)
@@ -408,4 +408,4 @@ ompl::base::ConstraintPtr createOMPLConstraints(const moveit::core::RobotModelCo
   }
   return std::make_shared<ompl::base::ConstraintIntersection>(num_dofs, ompl_constraints);
 }
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

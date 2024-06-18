@@ -37,9 +37,9 @@
 #pragma once
 
 #include <moveit/macros/class_forward.h>
-#include <moveit/ompl_interface/parameterization/model_based_state_space.h>
+#include <custom/ompl_interface/parameterization/model_based_state_space.h>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 MOVEIT_CLASS_FORWARD(ConstrainedPlanningStateSpace);
 
@@ -53,7 +53,7 @@ MOVEIT_CLASS_FORWARD(ConstrainedPlanningStateSpace);
  * This class overrides the virtual methods to copy states from OMPL to MoveIt and vice-versa. It is used as state space
  * in the `ModelBasedPlanningContextSpecification` and can handle general `ompl::base::State*` pointers that need to be
  * casted to a `ompl::Base::ConstrainedStateSpace::StateType`, instead of the 'normal'
- * `ompl_interface::ModelBasedStateSpace::StateType`. This casting looks like this:
+ * `custom_ompl_interface::ModelBasedStateSpace::StateType`. This casting looks like this:
  *
  *    ompl_state->as<ompl::base::ConstrainedStateSpace::StateType>()->getState()->as<StateType>()
  *
@@ -78,4 +78,4 @@ public:
   void copyJointToOMPLState(ompl::base::State* ompl_state, const moveit::core::RobotState& robot_state,
                             const moveit::core::JointModel* joint_model, int ompl_state_joint_index) const override;
 };
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

@@ -34,11 +34,11 @@
 
 /* Author: Jeroen De Maeyer */
 
-#include <moveit/ompl_interface/parameterization/joint_space/constrained_planning_state_space.h>
+#include <custom/ompl_interface/parameterization/joint_space/constrained_planning_state_space.h>
 
 #include <ompl/base/spaces/constraint/ConstrainedStateSpace.h>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 const std::string ConstrainedPlanningStateSpace::PARAMETERIZATION_TYPE = "ConstrainedPlanningJointModel";
 
@@ -58,7 +58,7 @@ double* ConstrainedPlanningStateSpace::getValueAddressAtIndex(ompl::base::State*
   }
 
   // Developer tip: replace this with a dynamic_cast for debugging
-  return ompl_state->as<ompl_interface::ConstrainedPlanningStateSpace::StateType>()->values + index;
+  return ompl_state->as<custom_ompl_interface::ConstrainedPlanningStateSpace::StateType>()->values + index;
 }
 
 void ConstrainedPlanningStateSpace::copyToRobotState(moveit::core::RobotState& robot_state,
@@ -98,4 +98,4 @@ void ConstrainedPlanningStateSpace::copyJointToOMPLState(ompl::base::State* ompl
   // clear any cached info (such as validity known or not)
   ompl_state->as<ompl::base::ConstrainedStateSpace::StateType>()->getState()->as<StateType>()->clearKnownInformation();
 }
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

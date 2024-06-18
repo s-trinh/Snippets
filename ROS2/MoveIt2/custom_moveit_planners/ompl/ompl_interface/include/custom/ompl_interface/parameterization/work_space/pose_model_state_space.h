@@ -36,10 +36,10 @@
 
 #pragma once
 
-#include <moveit/ompl_interface/parameterization/model_based_state_space.h>
+#include <custom/ompl_interface/parameterization/model_based_state_space.h>
 #include <ompl/base/spaces/SE3StateSpace.h>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 class PoseModelStateSpace : public ModelBasedStateSpace
 {
@@ -139,4 +139,4 @@ private:
   std::vector<PoseComponent> poses_;
   double jump_factor_;
 };
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

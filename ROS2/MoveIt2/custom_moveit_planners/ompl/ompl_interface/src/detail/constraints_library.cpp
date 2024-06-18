@@ -37,15 +37,15 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <filesystem>
 #include <fstream>
-#include <moveit/ompl_interface/detail/constrained_sampler.h>
-#include <moveit/ompl_interface/detail/constraints_library.h>
+#include <custom/ompl_interface/detail/constrained_sampler.h>
+#include <custom/ompl_interface/detail/constraints_library.h>
 
 #include <ompl/tools/config/SelfConfig.h>
 #include <utility>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
-static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.ompl_planning.constraints_library");
+static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.custom_ompl_planning.constraints_library");
 
 namespace
 {
@@ -201,7 +201,7 @@ bool interpolateUsingStoredStates(const ConstraintApproximationStateStorage* sta
   return true;
 }
 
-ompl_interface::InterpolationFunction ompl_interface::ConstraintApproximation::getInterpolationFunction() const
+custom_ompl_interface::InterpolationFunction custom_ompl_interface::ConstraintApproximation::getInterpolationFunction() const
 {
   if (explicit_motions_ && milestones_ > 0 && milestones_ < state_storage_->size())
     return
@@ -223,9 +223,9 @@ allocConstraintApproximationStateSampler(const ob::StateSpace* space, const std:
   else
     return std::make_shared<ConstraintApproximationStateSampler>(space, state_storage, milestones);
 }
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface
 
-ompl_interface::ConstraintApproximation::ConstraintApproximation(
+custom_ompl_interface::ConstraintApproximation::ConstraintApproximation(
     std::string group, std::string state_space_parameterization, bool explicit_motions,
     moveit_msgs::msg::Constraints msg, std::string filename, ompl::base::StateStoragePtr storage,
     std::size_t milestones)
@@ -244,7 +244,7 @@ ompl_interface::ConstraintApproximation::ConstraintApproximation(
 }
 
 ompl::base::StateSamplerAllocator
-ompl_interface::ConstraintApproximation::getStateSamplerAllocator(const moveit_msgs::msg::Constraints& /*unused*/) const
+custom_ompl_interface::ConstraintApproximation::getStateSamplerAllocator(const moveit_msgs::msg::Constraints& /*unused*/) const
 {
   if (state_storage_->size() == 0)
     return ompl::base::StateSamplerAllocator();
@@ -253,7 +253,7 @@ ompl_interface::ConstraintApproximation::getStateSamplerAllocator(const moveit_m
   };
 }
 /*
-void ompl_interface::ConstraintApproximation::visualizeDistribution(const
+void custom_ompl_interface::ConstraintApproximation::visualizeDistribution(const
 std::string &link_name, unsigned int count,
 visualization_msgs::MarkerArray &arr) const
 {
@@ -295,7 +295,7 @@ robot_state.getLinkState(link_name)->getGlobalLinkTransform().translation();
   }
 */
 
-void ompl_interface::ConstraintsLibrary::loadConstraintApproximations(const std::string& path)
+void custom_ompl_interface::ConstraintsLibrary::loadConstraintApproximations(const std::string& path)
 {
   constraint_approximations_.clear();
   std::ifstream fin((path + "/manifest").c_str());
@@ -363,7 +363,7 @@ void ompl_interface::ConstraintsLibrary::loadConstraintApproximations(const std:
   RCLCPP_INFO(LOGGER, "Done loading constrained space approximations.");
 }
 
-void ompl_interface::ConstraintsLibrary::saveConstraintApproximations(const std::string& path)
+void custom_ompl_interface::ConstraintsLibrary::saveConstraintApproximations(const std::string& path)
 {
   RCLCPP_INFO(LOGGER, "Saving %u constrained space approximations to '%s'",
               (unsigned int)constraint_approximations_.size(), path.c_str());
@@ -396,12 +396,12 @@ void ompl_interface::ConstraintsLibrary::saveConstraintApproximations(const std:
   fout.close();
 }
 
-void ompl_interface::ConstraintsLibrary::clearConstraintApproximations()
+void custom_ompl_interface::ConstraintsLibrary::clearConstraintApproximations()
 {
   constraint_approximations_.clear();
 }
 
-void ompl_interface::ConstraintsLibrary::printConstraintApproximations(std::ostream& out) const
+void custom_ompl_interface::ConstraintsLibrary::printConstraintApproximations(std::ostream& out) const
 {
   for (const std::pair<const std::string, ConstraintApproximationPtr>& constraint_approximation :
        constraint_approximations_)
@@ -416,8 +416,8 @@ void ompl_interface::ConstraintsLibrary::printConstraintApproximations(std::ostr
   }
 }
 
-const ompl_interface::ConstraintApproximationPtr&
-ompl_interface::ConstraintsLibrary::getConstraintApproximation(const moveit_msgs::msg::Constraints& msg) const
+const custom_ompl_interface::ConstraintApproximationPtr&
+custom_ompl_interface::ConstraintsLibrary::getConstraintApproximation(const moveit_msgs::msg::Constraints& msg) const
 {
   auto it = constraint_approximations_.find(msg.name);
   if (it != constraint_approximations_.end())
@@ -427,8 +427,8 @@ ompl_interface::ConstraintsLibrary::getConstraintApproximation(const moveit_msgs
   return empty;
 }
 
-ompl_interface::ConstraintApproximationConstructionResults
-ompl_interface::ConstraintsLibrary::addConstraintApproximation(const moveit_msgs::msg::Constraints& constr,
+custom_ompl_interface::ConstraintApproximationConstructionResults
+custom_ompl_interface::ConstraintsLibrary::addConstraintApproximation(const moveit_msgs::msg::Constraints& constr,
                                                                const std::string& group,
                                                                const planning_scene::PlanningSceneConstPtr& scene,
                                                                const ConstraintApproximationConstructionOptions& options)
@@ -436,8 +436,8 @@ ompl_interface::ConstraintsLibrary::addConstraintApproximation(const moveit_msgs
   return addConstraintApproximation(constr, constr, group, scene, options);
 }
 
-ompl_interface::ConstraintApproximationConstructionResults
-ompl_interface::ConstraintsLibrary::addConstraintApproximation(const moveit_msgs::msg::Constraints& constr_sampling,
+custom_ompl_interface::ConstraintApproximationConstructionResults
+custom_ompl_interface::ConstraintsLibrary::addConstraintApproximation(const moveit_msgs::msg::Constraints& constr_sampling,
                                                                const moveit_msgs::msg::Constraints& constr_hard,
                                                                const std::string& group,
                                                                const planning_scene::PlanningSceneConstPtr& scene,
@@ -478,7 +478,7 @@ ompl_interface::ConstraintsLibrary::addConstraintApproximation(const moveit_msgs
   return res;
 }
 
-ompl::base::StateStoragePtr ompl_interface::ConstraintsLibrary::constructConstraintApproximation(
+ompl::base::StateStoragePtr custom_ompl_interface::ConstraintsLibrary::constructConstraintApproximation(
     ModelBasedPlanningContext* pcontext, const moveit_msgs::msg::Constraints& constr_sampling,
     const moveit_msgs::msg::Constraints& constr_hard, const ConstraintApproximationConstructionOptions& options,
     ConstraintApproximationConstructionResults& result)

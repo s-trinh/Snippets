@@ -36,9 +36,9 @@
 
 #pragma once
 
-#include <moveit/ompl_interface/parameterization/model_based_state_space_factory.h>
+#include <custom/ompl_interface/parameterization/model_based_state_space_factory.h>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 class PoseModelStateSpaceFactory : public ModelBasedStateSpaceFactory
 {
@@ -51,4 +51,4 @@ public:
 protected:
   ModelBasedStateSpacePtr allocStateSpace(const ModelBasedStateSpaceSpecification& space_spec) const override;
 };
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

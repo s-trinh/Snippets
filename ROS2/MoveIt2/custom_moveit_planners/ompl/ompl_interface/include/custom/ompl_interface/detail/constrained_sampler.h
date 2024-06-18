@@ -39,7 +39,7 @@
 #include <ompl/base/StateSampler.h>
 #include <moveit/constraint_samplers/constraint_sampler.h>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 class ModelBasedPlanningContext;
 
@@ -76,4 +76,4 @@ private:
   unsigned int constrained_failure_;
   double inv_dim_;
 };
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

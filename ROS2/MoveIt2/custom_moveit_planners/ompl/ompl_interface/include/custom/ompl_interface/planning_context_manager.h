@@ -36,8 +36,8 @@
 
 #pragma once
 
-#include <moveit/ompl_interface/model_based_planning_context.h>
-#include <moveit/ompl_interface/parameterization/model_based_state_space_factory.h>
+#include <custom/ompl_interface/model_based_planning_context.h>
+#include <custom/ompl_interface/parameterization/model_based_state_space_factory.h>
 #include <moveit/constraint_samplers/constraint_sampler_manager.h>
 #include <moveit/macros/class_forward.h>
 
@@ -46,7 +46,7 @@
 #include <string>
 #include <map>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 class MultiQueryPlannerAllocator
 {
@@ -267,4 +267,4 @@ private:
   MOVEIT_STRUCT_FORWARD(CachedContexts);
   CachedContextsPtr cached_contexts_;
 };
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

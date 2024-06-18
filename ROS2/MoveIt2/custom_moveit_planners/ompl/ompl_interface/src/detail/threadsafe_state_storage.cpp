@@ -34,19 +34,19 @@
 
 /* Author: Ioan Sucan */
 
-#include <moveit/ompl_interface/detail/threadsafe_state_storage.h>
+#include <custom/ompl_interface/detail/threadsafe_state_storage.h>
 
-ompl_interface::TSStateStorage::TSStateStorage(const moveit::core::RobotModelPtr& robot_model)
+custom_ompl_interface::TSStateStorage::TSStateStorage(const moveit::core::RobotModelPtr& robot_model)
   : start_state_(robot_model)
 {
   start_state_.setToDefaultValues();
 }
 
-ompl_interface::TSStateStorage::TSStateStorage(const moveit::core::RobotState& start_state) : start_state_(start_state)
+custom_ompl_interface::TSStateStorage::TSStateStorage(const moveit::core::RobotState& start_state) : start_state_(start_state)
 {
 }
 
-ompl_interface::TSStateStorage::~TSStateStorage()
+custom_ompl_interface::TSStateStorage::~TSStateStorage()
 {
   for (auto& thread_state : thread_states_)
   {
@@ -54,7 +54,7 @@ ompl_interface::TSStateStorage::~TSStateStorage()
   }
 }
 
-moveit::core::RobotState* ompl_interface::TSStateStorage::getStateStorage() const
+moveit::core::RobotState* custom_ompl_interface::TSStateStorage::getStateStorage() const
 {
   moveit::core::RobotState* st = nullptr;
   std::unique_lock<std::mutex> slock(lock_);  /// \todo use Thread Local Storage?

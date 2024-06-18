@@ -34,18 +34,18 @@
 
 /* Author: Ioan Sucan */
 
-#include <moveit/ompl_interface/detail/constrained_goal_sampler.h>
-#include <moveit/ompl_interface/model_based_planning_context.h>
-#include <moveit/ompl_interface/detail/state_validity_checker.h>
+#include <custom/ompl_interface/detail/constrained_goal_sampler.h>
+#include <custom/ompl_interface/model_based_planning_context.h>
+#include <custom/ompl_interface/detail/state_validity_checker.h>
 
 #include <utility>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
-static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.ompl_planning.constrained_goal_sampler");
-}  // namespace ompl_interface
+static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.custom_ompl_planning.constrained_goal_sampler");
+}  // namespace custom_ompl_interface
 
-ompl_interface::ConstrainedGoalSampler::ConstrainedGoalSampler(const ModelBasedPlanningContext* pc,
+custom_ompl_interface::ConstrainedGoalSampler::ConstrainedGoalSampler(const ModelBasedPlanningContext* pc,
                                                                kinematic_constraints::KinematicConstraintSetPtr ks,
                                                                constraint_samplers::ConstraintSamplerPtr cs)
   : ob::GoalLazySamples(
@@ -68,7 +68,7 @@ ompl_interface::ConstrainedGoalSampler::ConstrainedGoalSampler(const ModelBasedP
   startSampling();
 }
 
-bool ompl_interface::ConstrainedGoalSampler::checkStateValidity(ob::State* new_goal,
+bool custom_ompl_interface::ConstrainedGoalSampler::checkStateValidity(ob::State* new_goal,
                                                                 const moveit::core::RobotState& state,
                                                                 bool verbose) const
 {
@@ -76,7 +76,7 @@ bool ompl_interface::ConstrainedGoalSampler::checkStateValidity(ob::State* new_g
   return static_cast<const StateValidityChecker*>(si_->getStateValidityChecker().get())->isValid(new_goal, verbose);
 }
 
-bool ompl_interface::ConstrainedGoalSampler::stateValidityCallback(ob::State* new_goal,
+bool custom_ompl_interface::ConstrainedGoalSampler::stateValidityCallback(ob::State* new_goal,
                                                                    moveit::core::RobotState const* state,
                                                                    const moveit::core::JointModelGroup* jmg,
                                                                    const double* jpos, bool verbose) const
@@ -88,7 +88,7 @@ bool ompl_interface::ConstrainedGoalSampler::stateValidityCallback(ob::State* ne
   return checkStateValidity(new_goal, solution_state, verbose);
 }
 
-bool ompl_interface::ConstrainedGoalSampler::sampleUsingConstraintSampler(const ob::GoalLazySamples* gls,
+bool custom_ompl_interface::ConstrainedGoalSampler::sampleUsingConstraintSampler(const ob::GoalLazySamples* gls,
                                                                           ob::State* new_goal)
 {
   unsigned int max_attempts = planning_context_->getMaximumGoalSamplingAttempts();

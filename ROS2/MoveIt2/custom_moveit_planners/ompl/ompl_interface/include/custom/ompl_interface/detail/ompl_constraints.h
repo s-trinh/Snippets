@@ -40,12 +40,12 @@
 
 #include <ompl/base/Constraint.h>
 
-#include <moveit/ompl_interface/detail/threadsafe_state_storage.h>
+#include <custom/ompl_interface/detail/threadsafe_state_storage.h>
 #include <moveit/robot_model/robot_model.h>
 #include <moveit/macros/class_forward.h>
 #include <moveit_msgs/msg/constraints.hpp>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 MOVEIT_CLASS_FORWARD(BaseConstraint);
 MOVEIT_CLASS_FORWARD(BoxConstraint);
@@ -96,11 +96,11 @@ private:
   std::vector<double> lower_, upper_;
   std::size_t size_;
 
-  friend std::ostream& operator<<(std::ostream& os, const ompl_interface::Bounds& bounds);
+  friend std::ostream& operator<<(std::ostream& os, const custom_ompl_interface::Bounds& bounds);
 };
 
 /** \brief Pretty printing of bounds. **/
-std::ostream& operator<<(std::ostream& os, const ompl_interface::Bounds& bounds);
+std::ostream& operator<<(std::ostream& os, const custom_ompl_interface::Bounds& bounds);
 
 /****************************
  * Base class for constraints
@@ -172,9 +172,9 @@ public:
    *
    * In this Position constraints case, it calculates the x, y and z position
    * of the end-effector. This error is then converted in generic equality constraints in the implementation of
-   * `ompl_interface::BaseConstraint::function`.
+   * `custom_ompl_interface::BaseConstraint::function`.
    *
-   * This method can be bypassed if you want to override `ompl_interface::BaseConstraint::function directly and ignore
+   * This method can be bypassed if you want to override `custom_ompl_interface::BaseConstraint::function directly and ignore
    * the bounds calculation.
    * */
   virtual Eigen::VectorXd calcError(const Eigen::Ref<const Eigen::VectorXd>& /*x*/) const;
@@ -185,7 +185,7 @@ public:
    * It does not take into account the derivative of the penalty functions defined in the Bounds class.
    * This correction is added in the implementation of of BaseConstraint::jacobian.
    *
-   * This method can be bypassed if you want to override `ompl_interface::BaseConstraint::jacobian directly and ignore
+   * This method can be bypassed if you want to override `custom_ompl_interface::BaseConstraint::jacobian directly and ignore
    * the bounds calculation.
    *
    * TODO(jeroendm), Maybe also use an output argument as in `ompl::base::Constraint::jacobian(x, out)` for better
@@ -270,9 +270,9 @@ public:
    *
    * In this Position constraints case, it calculates the x, y and z position
    * of the end-effector. This error is then converted in generic equality constraints in the implementation of
-   * `ompl_interface::BaseConstraint::function`.
+   * `custom_ompl_interface::BaseConstraint::function`.
    *
-   * This method can be bypassed if you want to override `ompl_interface::BaseConstraint::function directly and ignore
+   * This method can be bypassed if you want to override `custom_ompl_interface::BaseConstraint::function directly and ignore
    * the bounds calculation.
    * */
   Eigen::VectorXd calcError(const Eigen::Ref<const Eigen::VectorXd>& x) const override;
@@ -283,7 +283,7 @@ public:
    * It does not take into account the derivative of the penalty functions defined in the Bounds class.
    * This correction is added in the implementation of of BaseConstraint::jacobian.
    *
-   * This method can be bypassed if you want to override `ompl_interface::BaseConstraint::jacobian directly and ignore
+   * This method can be bypassed if you want to override `custom_ompl_interface::BaseConstraint::jacobian directly and ignore
    * the bounds calculation.
    *
    * TODO(jeroendm), Maybe also use an output argument as in `ompl::base::Constraint::jacobian(x, out)` for better
@@ -393,9 +393,9 @@ public:
    *
    * In this orientation constraints case, it calculates the orientation
    * of the end-effector. This error is then converted in generic equality constraints in the implementation of
-   * `ompl_interface::BaseConstraint::function`.
+   * `custom_ompl_interface::BaseConstraint::function`.
    *
-   * This method can be bypassed if you want to override `ompl_interface::BaseConstraint::function directly and ignore
+   * This method can be bypassed if you want to override `custom_ompl_interface::BaseConstraint::function directly and ignore
    * the bounds calculation.
    * */
   Eigen::VectorXd calcError(const Eigen::Ref<const Eigen::VectorXd>& x) const override;
@@ -406,7 +406,7 @@ public:
    * It does not take into account the derivative of the penalty functions defined in the Bounds class.
    * This correction is added in the implementation of of BaseConstraint::jacobian.
    *
-   * This method can be bypassed if you want to override `ompl_interface::BaseConstraint::jacobian directly and ignore
+   * This method can be bypassed if you want to override `custom_ompl_interface::BaseConstraint::jacobian directly and ignore
    * the bounds calculation.
    *
    * TODO(jeroendm), Maybe also use an output argument as in `ompl::base::Constraint::jacobian(x, out)` for better
@@ -459,4 +459,4 @@ inline Eigen::Matrix3d angularVelocityToAngleAxis(const double& angle, const Eig
   return Eigen::Matrix3d::Identity() - 0.5 * r_skew + (r_skew * r_skew / (t * t)) * c;
 }
 
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

@@ -42,7 +42,7 @@
 #include <moveit/kinematic_constraints/kinematic_constraint.h>
 #include <moveit/constraint_samplers/constraint_sampler.h>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 typedef std::function<bool(const ompl::base::State* from, const ompl::base::State* to, const double t,
                            ompl::base::State* state)>
@@ -270,4 +270,4 @@ protected:
   double tag_snap_to_segment_;
   double tag_snap_to_segment_complement_;
 };
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

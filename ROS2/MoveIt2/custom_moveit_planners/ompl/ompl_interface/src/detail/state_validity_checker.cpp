@@ -34,17 +34,17 @@
 
 /* Author: Ioan Sucan, Jeroen De Maeyer */
 
-#include <moveit/ompl_interface/detail/state_validity_checker.h>
-#include <moveit/ompl_interface/model_based_planning_context.h>
+#include <custom/ompl_interface/detail/state_validity_checker.h>
+#include <custom/ompl_interface/model_based_planning_context.h>
 #include <ompl/base/spaces/constraint/ConstrainedStateSpace.h>
 #include <rclcpp/logger.hpp>
 #include <rclcpp/logging.hpp>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
-static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.ompl_planning.state_validity_checker");
+static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.custom_ompl_planning.state_validity_checker");
 
-ompl_interface::StateValidityChecker::StateValidityChecker(const ModelBasedPlanningContext* pc)
+custom_ompl_interface::StateValidityChecker::StateValidityChecker(const ModelBasedPlanningContext* pc)
   : ompl::base::StateValidityChecker(pc->getOMPLSimpleSetup()->getSpaceInformation())
   , planning_context_(pc)
   , group_name_(pc->getGroupName())
@@ -68,7 +68,7 @@ ompl_interface::StateValidityChecker::StateValidityChecker(const ModelBasedPlann
   collision_request_with_distance_verbose_.verbose = true;
 }
 
-void ompl_interface::StateValidityChecker::setVerbose(bool flag)
+void custom_ompl_interface::StateValidityChecker::setVerbose(bool flag)
 {
   verbose_ = flag;
 }
@@ -315,4 +315,4 @@ bool ConstrainedPlanningStateValidityChecker::isValid(const ompl::base::State* w
   dist = res.distance;
   return !res.collision;
 }
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

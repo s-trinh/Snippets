@@ -39,13 +39,13 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include <moveit/ompl_interface/model_based_planning_context.h>
-#include <moveit/ompl_interface/detail/state_validity_checker.h>
-#include <moveit/ompl_interface/detail/constrained_sampler.h>
-#include <moveit/ompl_interface/detail/constrained_goal_sampler.h>
-#include <moveit/ompl_interface/detail/goal_union.h>
-#include <moveit/ompl_interface/detail/projection_evaluators.h>
-#include <moveit/ompl_interface/detail/constraints_library.h>
+#include <custom/ompl_interface/model_based_planning_context.h>
+#include <custom/ompl_interface/detail/state_validity_checker.h>
+#include <custom/ompl_interface/detail/constrained_sampler.h>
+#include <custom/ompl_interface/detail/constrained_goal_sampler.h>
+#include <custom/ompl_interface/detail/goal_union.h>
+#include <custom/ompl_interface/detail/projection_evaluators.h>
+#include <custom/ompl_interface/detail/constraints_library.h>
 
 #include <moveit/kinematic_constraints/utils.h>
 
@@ -67,12 +67,12 @@
 #include <ompl/base/objectives/MaximizeMinClearanceObjective.h>
 #include <ompl/geometric/planners/prm/LazyPRM.h>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
-static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.ompl_planning.model_based_planning_context");
-}  // namespace ompl_interface
+static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.custom_ompl_planning.model_based_planning_context");
+}  // namespace custom_ompl_interface
 
-ompl_interface::ModelBasedPlanningContext::ModelBasedPlanningContext(const std::string& name,
+custom_ompl_interface::ModelBasedPlanningContext::ModelBasedPlanningContext(const std::string& name,
                                                                      const ModelBasedPlanningContextSpecification& spec)
   : planning_interface::PlanningContext(name, spec.state_space_->getJointModelGroup()->getName())
   , spec_(spec)
@@ -100,7 +100,7 @@ ompl_interface::ModelBasedPlanningContext::ModelBasedPlanningContext(const std::
   constraints_library_ = std::make_shared<ConstraintsLibrary>(this);
 }
 
-void ompl_interface::ModelBasedPlanningContext::configure(const rclcpp::Node::SharedPtr& node,
+void custom_ompl_interface::ModelBasedPlanningContext::configure(const rclcpp::Node::SharedPtr& node,
                                                           bool use_constraints_approximations)
 {
   loadConstraintApproximations(node);
@@ -146,7 +146,7 @@ void ompl_interface::ModelBasedPlanningContext::configure(const rclcpp::Node::Sh
     ompl_simple_setup_->setup();
 }
 
-void ompl_interface::ModelBasedPlanningContext::setProjectionEvaluator(const std::string& peval)
+void custom_ompl_interface::ModelBasedPlanningContext::setProjectionEvaluator(const std::string& peval)
 {
   if (!spec_.state_space_)
   {
@@ -159,7 +159,7 @@ void ompl_interface::ModelBasedPlanningContext::setProjectionEvaluator(const std
 }
 
 ompl::base::ProjectionEvaluatorPtr
-ompl_interface::ModelBasedPlanningContext::getProjectionEvaluator(const std::string& peval) const
+custom_ompl_interface::ModelBasedPlanningContext::getProjectionEvaluator(const std::string& peval) const
 {
   if (peval.find_first_of("link(") == 0 && peval[peval.length() - 1] == ')')
   {
@@ -223,7 +223,7 @@ ompl_interface::ModelBasedPlanningContext::getProjectionEvaluator(const std::str
 }
 
 ompl::base::StateSamplerPtr
-ompl_interface::ModelBasedPlanningContext::allocPathConstrainedSampler(const ompl::base::StateSpace* state_space) const
+custom_ompl_interface::ModelBasedPlanningContext::allocPathConstrainedSampler(const ompl::base::StateSpace* state_space) const
 {
   if (spec_.state_space_.get() != state_space)
   {
@@ -272,7 +272,7 @@ ompl_interface::ModelBasedPlanningContext::allocPathConstrainedSampler(const omp
   return state_space->allocDefaultStateSampler();
 }
 
-void ompl_interface::ModelBasedPlanningContext::useConfig()
+void custom_ompl_interface::ModelBasedPlanningContext::useConfig()
 {
   const std::map<std::string, std::string>& config = spec_.config_;
   if (config.empty())
@@ -416,7 +416,7 @@ void ompl_interface::ModelBasedPlanningContext::useConfig()
   ompl_simple_setup_->getSpaceInformation()->setup();
 }
 
-void ompl_interface::ModelBasedPlanningContext::setPlanningVolume(const moveit_msgs::msg::WorkspaceParameters& wparams)
+void custom_ompl_interface::ModelBasedPlanningContext::setPlanningVolume(const moveit_msgs::msg::WorkspaceParameters& wparams)
 {
   if (wparams.min_corner.x == wparams.max_corner.x && wparams.min_corner.x == 0.0 &&
       wparams.min_corner.y == wparams.max_corner.y && wparams.min_corner.y == 0.0 &&
@@ -435,7 +435,7 @@ void ompl_interface::ModelBasedPlanningContext::setPlanningVolume(const moveit_m
                                         wparams.max_corner.y, wparams.min_corner.z, wparams.max_corner.z);
 }
 
-void ompl_interface::ModelBasedPlanningContext::simplifySolution(double timeout)
+void custom_ompl_interface::ModelBasedPlanningContext::simplifySolution(double timeout)
 {
   ompl::time::point start = ompl::time::now();
   ob::PlannerTerminationCondition ptc = constructPlannerTerminationCondition(timeout, start);
@@ -445,7 +445,7 @@ void ompl_interface::ModelBasedPlanningContext::simplifySolution(double timeout)
   unregisterTerminationCondition();
 }
 
-void ompl_interface::ModelBasedPlanningContext::interpolateSolution()
+void custom_ompl_interface::ModelBasedPlanningContext::interpolateSolution()
 {
   if (ompl_simple_setup_->haveSolutionPath())
   {
@@ -473,7 +473,7 @@ void ompl_interface::ModelBasedPlanningContext::interpolateSolution()
   }
 }
 
-void ompl_interface::ModelBasedPlanningContext::convertPath(const ompl::geometric::PathGeometric& pg,
+void custom_ompl_interface::ModelBasedPlanningContext::convertPath(const ompl::geometric::PathGeometric& pg,
                                                             robot_trajectory::RobotTrajectory& traj) const
 {
   moveit::core::RobotState ks = complete_initial_robot_state_;
@@ -484,7 +484,7 @@ void ompl_interface::ModelBasedPlanningContext::convertPath(const ompl::geometri
   }
 }
 
-bool ompl_interface::ModelBasedPlanningContext::getSolutionPath(robot_trajectory::RobotTrajectory& traj) const
+bool custom_ompl_interface::ModelBasedPlanningContext::getSolutionPath(robot_trajectory::RobotTrajectory& traj) const
 {
   traj.clear();
   if (ompl_simple_setup_->haveSolutionPath())
@@ -494,7 +494,7 @@ bool ompl_interface::ModelBasedPlanningContext::getSolutionPath(robot_trajectory
   return ompl_simple_setup_->haveSolutionPath();
 }
 
-void ompl_interface::ModelBasedPlanningContext::setVerboseStateValidityChecks(bool flag)
+void custom_ompl_interface::ModelBasedPlanningContext::setVerboseStateValidityChecks(bool flag)
 {
   if (ompl_simple_setup_->getStateValidityChecker())
   {
@@ -502,7 +502,7 @@ void ompl_interface::ModelBasedPlanningContext::setVerboseStateValidityChecks(bo
   }
 }
 
-ompl::base::GoalPtr ompl_interface::ModelBasedPlanningContext::constructGoal()
+ompl::base::GoalPtr custom_ompl_interface::ModelBasedPlanningContext::constructGoal()
 {
   // ******************* set up the goal representation, based on goal constraints
 
@@ -536,7 +536,7 @@ ompl::base::GoalPtr ompl_interface::ModelBasedPlanningContext::constructGoal()
 }
 
 ompl::base::PlannerTerminationCondition
-ompl_interface::ModelBasedPlanningContext::constructPlannerTerminationCondition(double timeout,
+custom_ompl_interface::ModelBasedPlanningContext::constructPlannerTerminationCondition(double timeout,
                                                                                 const ompl::time::point& start)
 {
   auto it = spec_.config_.find("termination_condition");
@@ -608,14 +608,14 @@ ompl_interface::ModelBasedPlanningContext::constructPlannerTerminationCondition(
   return ob::plannerAlwaysTerminatingCondition();
 }
 
-void ompl_interface::ModelBasedPlanningContext::setCompleteInitialState(
+void custom_ompl_interface::ModelBasedPlanningContext::setCompleteInitialState(
     const moveit::core::RobotState& complete_initial_robot_state)
 {
   complete_initial_robot_state_ = complete_initial_robot_state;
   complete_initial_robot_state_.update();
 }
 
-void ompl_interface::ModelBasedPlanningContext::clear()
+void custom_ompl_interface::ModelBasedPlanningContext::clear()
 {
   if (!multi_query_planning_enabled_)
   {
@@ -644,7 +644,7 @@ void ompl_interface::ModelBasedPlanningContext::clear()
   getOMPLStateSpace()->setInterpolationFunction(InterpolationFunction());
 }
 
-bool ompl_interface::ModelBasedPlanningContext::setPathConstraints(const moveit_msgs::msg::Constraints& path_constraints,
+bool custom_ompl_interface::ModelBasedPlanningContext::setPathConstraints(const moveit_msgs::msg::Constraints& path_constraints,
                                                                    moveit_msgs::msg::MoveItErrorCodes* /*error*/)
 {
   // ******************* set the path constraints to use
@@ -655,7 +655,7 @@ bool ompl_interface::ModelBasedPlanningContext::setPathConstraints(const moveit_
   return true;
 }
 
-bool ompl_interface::ModelBasedPlanningContext::setGoalConstraints(
+bool custom_ompl_interface::ModelBasedPlanningContext::setGoalConstraints(
     const std::vector<moveit_msgs::msg::Constraints>& goal_constraints,
     const moveit_msgs::msg::Constraints& path_constraints, moveit_msgs::msg::MoveItErrorCodes* error)
 {
@@ -688,7 +688,7 @@ bool ompl_interface::ModelBasedPlanningContext::setGoalConstraints(
   return static_cast<bool>(goal);
 }
 
-bool ompl_interface::ModelBasedPlanningContext::benchmark(double timeout, unsigned int count,
+bool custom_ompl_interface::ModelBasedPlanningContext::benchmark(double timeout, unsigned int count,
                                                           const std::string& filename)
 {
   ompl_benchmark_.clearPlanners();
@@ -706,7 +706,7 @@ bool ompl_interface::ModelBasedPlanningContext::benchmark(double timeout, unsign
   return filename.empty() ? ompl_benchmark_.saveResultsToFile() : ompl_benchmark_.saveResultsToFile(filename.c_str());
 }
 
-void ompl_interface::ModelBasedPlanningContext::startSampling()
+void custom_ompl_interface::ModelBasedPlanningContext::startSampling()
 {
   bool gls = ompl_simple_setup_->getGoal()->hasType(ob::GOAL_LAZY_SAMPLES);
   if (gls)
@@ -720,7 +720,7 @@ void ompl_interface::ModelBasedPlanningContext::startSampling()
   }
 }
 
-void ompl_interface::ModelBasedPlanningContext::stopSampling()
+void custom_ompl_interface::ModelBasedPlanningContext::stopSampling()
 {
   bool gls = ompl_simple_setup_->getGoal()->hasType(ob::GOAL_LAZY_SAMPLES);
   if (gls)
@@ -734,7 +734,7 @@ void ompl_interface::ModelBasedPlanningContext::stopSampling()
   }
 }
 
-void ompl_interface::ModelBasedPlanningContext::preSolve()
+void custom_ompl_interface::ModelBasedPlanningContext::preSolve()
 {
   // clear previously computed solutions
   ompl_simple_setup_->getProblemDefinition()->clearSolutionPaths();
@@ -747,7 +747,7 @@ void ompl_interface::ModelBasedPlanningContext::preSolve()
   ompl_simple_setup_->getSpaceInformation()->getMotionValidator()->resetMotionCounter();
 }
 
-void ompl_interface::ModelBasedPlanningContext::postSolve()
+void custom_ompl_interface::ModelBasedPlanningContext::postSolve()
 {
   stopSampling();
   int v = ompl_simple_setup_->getSpaceInformation()->getMotionValidator()->getValidMotionCount();
@@ -760,7 +760,7 @@ void ompl_interface::ModelBasedPlanningContext::postSolve()
   RCLCPP_DEBUG(LOGGER, "%s", rclcpp::get_c_string(debug_out.str()));
 }
 
-bool ompl_interface::ModelBasedPlanningContext::solve(planning_interface::MotionPlanResponse& res)
+bool custom_ompl_interface::ModelBasedPlanningContext::solve(planning_interface::MotionPlanResponse& res)
 {
   res.error_code_ = solve(request_.allowed_planning_time, request_.num_planning_attempts);
   if (res.error_code_.val == moveit_msgs::msg::MoveItErrorCodes::SUCCESS)
@@ -793,7 +793,7 @@ bool ompl_interface::ModelBasedPlanningContext::solve(planning_interface::Motion
   }
 }
 
-bool ompl_interface::ModelBasedPlanningContext::solve(planning_interface::MotionPlanDetailedResponse& res)
+bool custom_ompl_interface::ModelBasedPlanningContext::solve(planning_interface::MotionPlanDetailedResponse& res)
 {
   moveit_msgs::msg::MoveItErrorCodes moveit_result =
       solve(request_.allowed_planning_time, request_.num_planning_attempts);
@@ -844,7 +844,7 @@ bool ompl_interface::ModelBasedPlanningContext::solve(planning_interface::Motion
   }
 }
 
-const moveit_msgs::msg::MoveItErrorCodes ompl_interface::ModelBasedPlanningContext::solve(double timeout,
+const moveit_msgs::msg::MoveItErrorCodes custom_ompl_interface::ModelBasedPlanningContext::solve(double timeout,
                                                                                           unsigned int count)
 {
   ompl::time::point start = ompl::time::now();
@@ -956,19 +956,19 @@ const moveit_msgs::msg::MoveItErrorCodes ompl_interface::ModelBasedPlanningConte
   return result;
 }
 
-void ompl_interface::ModelBasedPlanningContext::registerTerminationCondition(const ob::PlannerTerminationCondition& ptc)
+void custom_ompl_interface::ModelBasedPlanningContext::registerTerminationCondition(const ob::PlannerTerminationCondition& ptc)
 {
   std::unique_lock<std::mutex> slock(ptc_lock_);
   ptc_ = &ptc;
 }
 
-void ompl_interface::ModelBasedPlanningContext::unregisterTerminationCondition()
+void custom_ompl_interface::ModelBasedPlanningContext::unregisterTerminationCondition()
 {
   std::unique_lock<std::mutex> slock(ptc_lock_);
   ptc_ = nullptr;
 }
 
-int32_t ompl_interface::ModelBasedPlanningContext::logPlannerStatus(const og::SimpleSetupPtr& ompl_simple_setup)
+int32_t custom_ompl_interface::ModelBasedPlanningContext::logPlannerStatus(const og::SimpleSetupPtr& ompl_simple_setup)
 {
   auto result = moveit_msgs::msg::MoveItErrorCodes::PLANNING_FAILED;
   const ompl::base::PlannerStatus ompl_status = ompl_simple_setup->getLastPlannerStatus();
@@ -1028,7 +1028,7 @@ int32_t ompl_interface::ModelBasedPlanningContext::logPlannerStatus(const og::Si
   return result;
 }
 
-bool ompl_interface::ModelBasedPlanningContext::terminate()
+bool custom_ompl_interface::ModelBasedPlanningContext::terminate()
 {
   std::unique_lock<std::mutex> slock(ptc_lock_);
   if (ptc_)
@@ -1038,7 +1038,7 @@ bool ompl_interface::ModelBasedPlanningContext::terminate()
   return true;
 }
 
-bool ompl_interface::ModelBasedPlanningContext::saveConstraintApproximations(const rclcpp::Node::SharedPtr& node)
+bool custom_ompl_interface::ModelBasedPlanningContext::saveConstraintApproximations(const rclcpp::Node::SharedPtr& node)
 {
   std::string constraint_path;
   if (node->get_parameter("constraint_approximations_path", constraint_path))
@@ -1050,7 +1050,7 @@ bool ompl_interface::ModelBasedPlanningContext::saveConstraintApproximations(con
   return false;
 }
 
-bool ompl_interface::ModelBasedPlanningContext::loadConstraintApproximations(const rclcpp::Node::SharedPtr& node)
+bool custom_ompl_interface::ModelBasedPlanningContext::loadConstraintApproximations(const rclcpp::Node::SharedPtr& node)
 {
   std::string constraint_path;
   if (node->get_parameter("constraint_approximations_path", constraint_path))

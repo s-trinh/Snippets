@@ -34,15 +34,15 @@
 
 /* Author: Ioan Sucan */
 
-#include <moveit/ompl_interface/parameterization/work_space/pose_model_state_space_factory.h>
-#include <moveit/ompl_interface/parameterization/work_space/pose_model_state_space.h>
+#include <custom/ompl_interface/parameterization/work_space/pose_model_state_space_factory.h>
+#include <custom/ompl_interface/parameterization/work_space/pose_model_state_space.h>
 
-ompl_interface::PoseModelStateSpaceFactory::PoseModelStateSpaceFactory() : ModelBasedStateSpaceFactory()
+custom_ompl_interface::PoseModelStateSpaceFactory::PoseModelStateSpaceFactory() : ModelBasedStateSpaceFactory()
 {
   type_ = PoseModelStateSpace::PARAMETERIZATION_TYPE;
 }
 
-int ompl_interface::PoseModelStateSpaceFactory::canRepresentProblem(
+int custom_ompl_interface::PoseModelStateSpaceFactory::canRepresentProblem(
     const std::string& group, const moveit_msgs::msg::MotionPlanRequest& req,
     const moveit::core::RobotModelConstPtr& robot_model) const
 {
@@ -83,8 +83,8 @@ int ompl_interface::PoseModelStateSpaceFactory::canRepresentProblem(
   return -1;
 }
 
-ompl_interface::ModelBasedStateSpacePtr
-ompl_interface::PoseModelStateSpaceFactory::allocStateSpace(const ModelBasedStateSpaceSpecification& space_spec) const
+custom_ompl_interface::ModelBasedStateSpacePtr
+custom_ompl_interface::PoseModelStateSpaceFactory::allocStateSpace(const ModelBasedStateSpaceSpecification& space_spec) const
 {
   return std::make_shared<PoseModelStateSpace>(space_spec);
 }

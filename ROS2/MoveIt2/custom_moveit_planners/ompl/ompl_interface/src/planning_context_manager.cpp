@@ -34,7 +34,7 @@
 
 /* Author: Ioan Sucan */
 
-#include <moveit/ompl_interface/planning_context_manager.h>
+#include <custom/ompl_interface/planning_context_manager.h>
 #include <moveit/robot_state/conversions.h>
 
 #include <utility>
@@ -70,18 +70,18 @@
 #include <ompl/base/ConstrainedSpaceInformation.h>
 #include <ompl/base/spaces/constraint/ProjectedStateSpace.h>
 
-#include <moveit/ompl_interface/parameterization/joint_space/joint_model_state_space_factory.h>
-#include <moveit/ompl_interface/parameterization/joint_space/joint_model_state_space.h>
-#include <moveit/ompl_interface/parameterization/joint_space/constrained_planning_state_space_factory.h>
-#include <moveit/ompl_interface/parameterization/joint_space/constrained_planning_state_space.h>
-#include <moveit/ompl_interface/parameterization/work_space/pose_model_state_space_factory.h>
-#include <moveit/ompl_interface/detail/ompl_constraints.h>
+#include <custom/ompl_interface/parameterization/joint_space/joint_model_state_space_factory.h>
+#include <custom/ompl_interface/parameterization/joint_space/joint_model_state_space.h>
+#include <custom/ompl_interface/parameterization/joint_space/constrained_planning_state_space_factory.h>
+#include <custom/ompl_interface/parameterization/joint_space/constrained_planning_state_space.h>
+#include <custom/ompl_interface/parameterization/work_space/pose_model_state_space_factory.h>
+#include <custom/ompl_interface/detail/ompl_constraints.h>
 
 using namespace std::placeholders;
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
-static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.ompl_planning.planning_context_manager");
+static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.custom_ompl_planning.planning_context_manager");
 
 struct PlanningContextManager::CachedContexts
 {
@@ -601,4 +601,4 @@ ModelBasedPlanningContextPtr PlanningContextManager::getPlanningContext(
 
   return context;
 }
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

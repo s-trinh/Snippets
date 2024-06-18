@@ -36,8 +36,8 @@
 
 #pragma once
 
-#include <moveit/ompl_interface/parameterization/model_based_state_space.h>
-#include <moveit/ompl_interface/detail/constrained_valid_state_sampler.h>
+#include <custom/ompl_interface/parameterization/model_based_state_space.h>
+#include <custom/ompl_interface/detail/constrained_valid_state_sampler.h>
 #include <moveit/constraint_samplers/constraint_sampler_manager.h>
 #include <moveit/planning_interface/planning_interface.h>
 
@@ -47,7 +47,7 @@
 #include <ompl/base/StateStorage.h>
 #include <ompl/base/spaces/constraint/ConstrainedStateSpace.h>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 namespace ob = ompl::base;
 namespace og = ompl::geometric;
@@ -77,7 +77,7 @@ struct ModelBasedPlanningContextSpecification
    * the path constraints are handled by this state space.
    *
    * **Important**: because code often depents on the attribute `state_space_` to copy states from MoveIt to OMPL, we
-   * must set `state_space_` to have type `ompl_interface::ConstrainedPlanningStateSpace`. The actual planning does
+   * must set `state_space_` to have type `custom_ompl_interface::ConstrainedPlanningStateSpace`. The actual planning does
    * not happen with this `state_space_`, but it is used to create the `constrained_state_space_` of type
    * `ompl::base::ConstrainedStateSpace`. The latter is the one passed to OMPL simple setup (after creating a
    * ConstrainedSpaceInformation object from it).
@@ -454,4 +454,4 @@ protected:
   // if false parallel plan returns the first solution found
   bool hybridize_;
 };
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

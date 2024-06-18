@@ -41,7 +41,7 @@
 #include <moveit/constraint_samplers/constraint_sampler.h>
 #include <moveit/macros/class_forward.h>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 class ModelBasedPlanningContext;
 
@@ -68,4 +68,4 @@ private:
   double inv_dim_;
   ompl::RNG rng_;
 };
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

@@ -34,15 +34,15 @@
 
 /* Author: Ioan Sucan, Dave Coleman */
 
-#include <moveit/ompl_interface/ompl_interface.h>
+#include <custom/ompl_interface/ompl_interface.h>
 #include <moveit/planning_interface/planning_interface.h>
 #include <moveit/planning_scene/planning_scene.h>
 
 #include <ompl/util/Console.h>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
-static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.ompl_planning.ompl_planner_manager");
+static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.custom_ompl_planning.ompl_planner_manager");
 static const rclcpp::Logger OMPL_LOGGER = rclcpp::get_logger("ompl");
 
 class OMPLPlannerManager : public planning_interface::PlannerManager
@@ -85,8 +85,8 @@ public:
   bool initialize(const moveit::core::RobotModelConstPtr& model, const rclcpp::Node::SharedPtr& node,
                   const std::string& parameter_namespace) override
   {
-    ompl_interface_ = std::make_unique<OMPLInterface>(model, node, parameter_namespace);
-    setPlannerConfigurations(ompl_interface_->getPlannerConfigurations());
+    custom_ompl_interface_ = std::make_unique<OMPLInterface>(model, node, parameter_namespace);
+    setPlannerConfigurations(custom_ompl_interface_->getPlannerConfigurations());
     return true;
   }
 
@@ -102,7 +102,7 @@ public:
 
   void getPlanningAlgorithms(std::vector<std::string>& algs) const override
   {
-    const planning_interface::PlannerConfigurationMap& pconfig = ompl_interface_->getPlannerConfigurations();
+    const planning_interface::PlannerConfigurationMap& pconfig = custom_ompl_interface_->getPlannerConfigurations();
     algs.clear();
     algs.reserve(pconfig.size());
     for (const std::pair<const std::string, planning_interface::PlannerConfigurationSettings>& config : pconfig)
@@ -112,9 +112,9 @@ public:
   void setPlannerConfigurations(const planning_interface::PlannerConfigurationMap& pconfig) override
   {
     // this call can add a few more configs than we pass in (adds defaults)
-    ompl_interface_->setPlannerConfigurations(pconfig);
+    custom_ompl_interface_->setPlannerConfigurations(pconfig);
     // so we read the configs instead of just setting pconfig
-    PlannerManager::setPlannerConfigurations(ompl_interface_->getPlannerConfigurations());
+    PlannerManager::setPlannerConfigurations(custom_ompl_interface_->getPlannerConfigurations());
   }
 
   planning_interface::PlanningContextPtr
@@ -122,17 +122,17 @@ public:
                      const planning_interface::MotionPlanRequest& req,
                      moveit_msgs::msg::MoveItErrorCodes& error_code) const override
   {
-    return ompl_interface_->getPlanningContext(planning_scene, req, error_code);
+    return custom_ompl_interface_->getPlanningContext(planning_scene, req, error_code);
   }
 
 private:
   rclcpp::Node::SharedPtr node_;
-  std::unique_ptr<OMPLInterface> ompl_interface_;
+  std::unique_ptr<OMPLInterface> custom_ompl_interface_;
   std::shared_ptr<ompl::msg::OutputHandler> output_handler_;
 };
 
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface
 
 #include <pluginlib/class_list_macros.hpp>
 
-PLUGINLIB_EXPORT_CLASS(ompl_interface::OMPLPlannerManager, planning_interface::PlannerManager)
+PLUGINLIB_EXPORT_CLASS(custom_ompl_interface::OMPLPlannerManager, planning_interface::PlannerManager)

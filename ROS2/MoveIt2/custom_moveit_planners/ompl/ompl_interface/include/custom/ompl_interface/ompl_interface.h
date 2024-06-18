@@ -36,7 +36,7 @@
 
 #pragma once
 
-#include <moveit/ompl_interface/planning_context_manager.h>
+#include <custom/ompl_interface/planning_context_manager.h>
 #include <moveit/constraint_samplers/constraint_sampler_manager.h>
 #include <moveit/constraint_sampler_manager_loader/constraint_sampler_manager_loader.h>
 #include <moveit/planning_interface/planning_interface.h>
@@ -47,7 +47,7 @@
 #include <map>
 
 /** \brief The MoveIt interface to OMPL */
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 /** @class OMPLInterface
  *  This class defines the interface to the motion planners in OMPL*/
@@ -152,4 +152,4 @@ protected:
 private:
   constraint_sampler_manager_loader::ConstraintSamplerManagerLoaderPtr constraint_sampler_manager_loader_;
 };
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

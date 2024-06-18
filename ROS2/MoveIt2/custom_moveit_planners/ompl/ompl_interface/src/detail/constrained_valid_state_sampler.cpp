@@ -34,17 +34,17 @@
 
 /* Author: Ioan Sucan */
 
-#include <moveit/ompl_interface/detail/constrained_valid_state_sampler.h>
-#include <moveit/ompl_interface/model_based_planning_context.h>
+#include <custom/ompl_interface/detail/constrained_valid_state_sampler.h>
+#include <custom/ompl_interface/model_based_planning_context.h>
 
 #include <utility>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
-static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.ompl_planning.constrained_valid_state_sampler");
-}  // namespace ompl_interface
+static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.custom_ompl_planning.constrained_valid_state_sampler");
+}  // namespace custom_ompl_interface
 
-ompl_interface::ValidConstrainedSampler::ValidConstrainedSampler(const ModelBasedPlanningContext* pc,
+custom_ompl_interface::ValidConstrainedSampler::ValidConstrainedSampler(const ModelBasedPlanningContext* pc,
                                                                  kinematic_constraints::KinematicConstraintSetPtr ks,
                                                                  constraint_samplers::ConstraintSamplerPtr cs)
   : ob::ValidStateSampler(pc->getOMPLSimpleSetup()->getSpaceInformation().get())
@@ -59,7 +59,7 @@ ompl_interface::ValidConstrainedSampler::ValidConstrainedSampler(const ModelBase
   RCLCPP_DEBUG(LOGGER, "Constructed a ValidConstrainedSampler instance at address %p", this);
 }
 
-bool ompl_interface::ValidConstrainedSampler::project(ompl::base::State* state)
+bool custom_ompl_interface::ValidConstrainedSampler::project(ompl::base::State* state)
 {
   if (constraint_sampler_)
   {
@@ -76,7 +76,7 @@ bool ompl_interface::ValidConstrainedSampler::project(ompl::base::State* state)
   return false;
 }
 
-bool ompl_interface::ValidConstrainedSampler::sample(ob::State* state)
+bool custom_ompl_interface::ValidConstrainedSampler::sample(ob::State* state)
 {
   if (constraint_sampler_)
   {
@@ -101,7 +101,7 @@ bool ompl_interface::ValidConstrainedSampler::sample(ob::State* state)
   return false;
 }
 
-bool ompl_interface::ValidConstrainedSampler::sampleNear(ompl::base::State* state, const ompl::base::State* near,
+bool custom_ompl_interface::ValidConstrainedSampler::sampleNear(ompl::base::State* state, const ompl::base::State* near,
                                                          const double distance)
 {
   if (!sample(state))

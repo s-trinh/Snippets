@@ -34,17 +34,17 @@
 
 /* Author: Ioan Sucan */
 
-#include <moveit/ompl_interface/ompl_interface.h>
+#include <custom/ompl_interface/ompl_interface.h>
 #include <moveit/robot_state/conversions.h>
 #include <moveit/kinematic_constraints/utils.h>
-#include <moveit/ompl_interface/detail/constrained_valid_state_sampler.h>
+#include <custom/ompl_interface/detail/constrained_valid_state_sampler.h>
 
 #include <moveit/utils/lexical_casts.h>
 #include <fstream>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
-static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.ompl_planning.ompl_interface");
+static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit.custom_ompl_planning.custom_ompl_interface");
 
 OMPLInterface::OMPLInterface(const moveit::core::RobotModelConstPtr& robot_model, const rclcpp::Node::SharedPtr& node,
                              const std::string& parameter_namespace)
@@ -250,4 +250,4 @@ void OMPLInterface::printStatus()
 {
   RCLCPP_INFO(LOGGER, "OMPL ROS interface is running.");
 }
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

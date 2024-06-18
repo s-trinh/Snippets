@@ -35,10 +35,10 @@
 /* Author: Jeroen De Maeyer */
 /* Mostly copied from Ioan Sucan's code */
 
-#include <moveit/ompl_interface/parameterization/joint_space/constrained_planning_state_space.h>
-#include <moveit/ompl_interface/parameterization/joint_space/constrained_planning_state_space_factory.h>
+#include <custom/ompl_interface/parameterization/joint_space/constrained_planning_state_space.h>
+#include <custom/ompl_interface/parameterization/joint_space/constrained_planning_state_space_factory.h>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 ConstrainedPlanningStateSpaceFactory::ConstrainedPlanningStateSpaceFactory() : ModelBasedStateSpaceFactory()
 {
@@ -55,9 +55,9 @@ int ConstrainedPlanningStateSpaceFactory::canRepresentProblem(
   return -2;
 }
 
-ModelBasedStateSpacePtr ompl_interface::ConstrainedPlanningStateSpaceFactory::allocStateSpace(
+ModelBasedStateSpacePtr custom_ompl_interface::ConstrainedPlanningStateSpaceFactory::allocStateSpace(
     const ModelBasedStateSpaceSpecification& space_spec) const
 {
   return std::make_shared<ConstrainedPlanningStateSpace>(space_spec);
 }
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

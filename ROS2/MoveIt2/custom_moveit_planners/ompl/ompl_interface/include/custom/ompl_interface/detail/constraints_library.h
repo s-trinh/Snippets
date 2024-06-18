@@ -38,12 +38,12 @@
 
 #include <map>
 #include <moveit/macros/class_forward.h>
-#include <moveit/ompl_interface/model_based_planning_context.h>
+#include <custom/ompl_interface/model_based_planning_context.h>
 #include <moveit/kinematic_constraints/kinematic_constraint.h>
 #include <ompl/base/StateStorage.h>
 #include <boost/serialization/map.hpp>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 typedef std::pair<std::vector<std::size_t>, std::map<std::size_t, std::pair<std::size_t, std::size_t> > >
     ConstrainedStateMetadata;
@@ -200,4 +200,4 @@ private:
   ModelBasedPlanningContext* context_;
   std::map<std::string, ConstraintApproximationPtr> constraint_approximations_;
 };
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface

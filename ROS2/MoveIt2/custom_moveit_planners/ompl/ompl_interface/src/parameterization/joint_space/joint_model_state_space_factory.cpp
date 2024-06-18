@@ -34,23 +34,23 @@
 
 /* Author: Ioan Sucan */
 
-#include <moveit/ompl_interface/parameterization/joint_space/joint_model_state_space_factory.h>
-#include <moveit/ompl_interface/parameterization/joint_space/joint_model_state_space.h>
+#include <custom/ompl_interface/parameterization/joint_space/joint_model_state_space_factory.h>
+#include <custom/ompl_interface/parameterization/joint_space/joint_model_state_space.h>
 
-ompl_interface::JointModelStateSpaceFactory::JointModelStateSpaceFactory() : ModelBasedStateSpaceFactory()
+custom_ompl_interface::JointModelStateSpaceFactory::JointModelStateSpaceFactory() : ModelBasedStateSpaceFactory()
 {
   type_ = JointModelStateSpace::PARAMETERIZATION_TYPE;
 }
 
-int ompl_interface::JointModelStateSpaceFactory::canRepresentProblem(
+int custom_ompl_interface::JointModelStateSpaceFactory::canRepresentProblem(
     const std::string& /*group*/, const moveit_msgs::msg::MotionPlanRequest& /*req*/,
     const moveit::core::RobotModelConstPtr& /*robot_model*/) const
 {
   return 100;
 }
 
-ompl_interface::ModelBasedStateSpacePtr
-ompl_interface::JointModelStateSpaceFactory::allocStateSpace(const ModelBasedStateSpaceSpecification& space_spec) const
+custom_ompl_interface::ModelBasedStateSpacePtr
+custom_ompl_interface::JointModelStateSpaceFactory::allocStateSpace(const ModelBasedStateSpaceSpecification& space_spec) const
 {
   return std::make_shared<JointModelStateSpace>(space_spec);
 }

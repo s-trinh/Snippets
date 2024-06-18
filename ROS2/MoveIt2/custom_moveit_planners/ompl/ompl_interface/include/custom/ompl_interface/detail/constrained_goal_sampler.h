@@ -43,7 +43,7 @@
 #include <moveit/robot_state/robot_state.h>
 #include <moveit/robot_model/joint_model_group.h>
 
-namespace ompl_interface
+namespace custom_ompl_interface
 {
 class ModelBasedPlanningContext;
 
@@ -72,4 +72,4 @@ private:
   bool warned_invalid_samples_;
   unsigned int verbose_display_;
 };
-}  // namespace ompl_interface
+}  // namespace custom_ompl_interface
